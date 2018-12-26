@@ -14,6 +14,25 @@ script:
   - CI=false yarn build
   - npm run build-storybook
 
+before_deploy:
+  - git config --global user.email "demey.emmanuel@gmail.com"
+  - git config --global user.name "Emmanuel DEMEY"
+  - export GIT_TAG=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - git push -q https://$TAGPERM@github.com/$TRAVIS_REPO_SLUG --tags
+  - ls -R
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: [redacted]
+  file:
+    - 'README.md'
+  on:
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^master$
+
 after_script:
   - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js'
   - bash scripts/gitbook.sh
