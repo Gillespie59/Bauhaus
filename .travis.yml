@@ -17,7 +17,7 @@ deploy:
   provider: releases
   api_key:
     secure:
-      - redacted
+      - ${TRAVIS_SECURE_TOKEN_NAME}
   file:
     - README.md
   on:
