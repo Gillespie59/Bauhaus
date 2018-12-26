@@ -7,12 +7,12 @@ cache: yarn
 install:
   - npm install
 
-before_script:
-  - npm run test:coverage
+# before_script:
+#  - npm run test:coverage
 
 script:
   - CI=false yarn build
-  - npm run build-storybook
+#  - npm run build-storybook
 
 before_deploy:
   - git config --global user.email "demey.emmanuel@gmail.com"
