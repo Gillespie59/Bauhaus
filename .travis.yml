@@ -4,8 +4,11 @@ node_js:
 cache: yarn
 install:
   - npm install
+before_script:
+  - npm run test:coverage
 script:
   - CI=false yarn build
+  - npm run build-storybook
 before_deploy:
   - git config --global user.email "demey.emmanuel@gmail.com"
   - git config --global user.name "Emmanuel DEMEY"
